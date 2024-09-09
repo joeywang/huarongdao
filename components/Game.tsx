@@ -35,6 +35,12 @@ export function GameBoard() {
         { dx: CELL_SIZE, dy: 0 },   // Right
       ];
 
+      // Shuffle the possibleMoves array
+      for (let i = possibleMoves.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [possibleMoves[i], possibleMoves[j]] = [possibleMoves[j], possibleMoves[i]];
+      }
+
       for (const move of possibleMoves) {
         const newTop = block.top + move.dy;
         const newLeft = block.left + move.dx;
