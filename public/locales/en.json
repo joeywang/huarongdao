@@ -2,5 +2,20 @@
   "settings": {
     "title": "Settings",
     "language": "Language"
+  },
+  "home": {
+    "title": "Home"
+  },
+  "game": {
+    "title": "Game"
+  },
+  "blocks": {
+    "caocao": "Cao Cao",
+    "guanyu": "Guan Yu",
+    "zhaoyun": "Zhao Yun",
+    "zhangfei": "Zhang Fei",
+    "machao": "Ma Chao",
+    "huangzhong": "Huang Zhong",
+    "soldier": "Soldier"
   }
 }

@@ -1,0 +1,21 @@
+{
+  "settings": {
+    "title": "Settings",
+    "language": "Language"
+  },
+  "home": {
+    "title": "Home"
+  },
+  "game": {
+    "title": "Game"
+  },
+  "blocks": {
+    "caocao": "曹操",
+    "guanyu": "关羽",
+    "zhaoyun": "赵云",
+    "zhangfei": "张飞",
+    "machao": "马超",
+    "huangzhong": "黄忠",
+    "soldier": "兵"
+  }
+}
