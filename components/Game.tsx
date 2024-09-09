@@ -4,7 +4,8 @@ import { ThemedView } from './ThemedView';
 import { ThemedText } from './ThemedText';
 import { Block, BlockProps } from './Block';
 
-const BOARD_SIZE = 4;
+const BOARD_WIDTH = 4;
+const BOARD_HEIGHT = 5;
 const CELL_SIZE = 80;
 
 const initialBlocks: BlockProps[] = [
@@ -22,9 +23,55 @@ const initialBlocks: BlockProps[] = [
 
 export function GameBoard() {
   const [blocks, setBlocks] = React.useState(initialBlocks);
+
   const handleBlockPress = (index: number) => {
-    // TODO: Implement block movement logic
-    console.log(`Block ${blocks[index].name} pressed`);
+    setBlocks(prevBlocks => {
+      const newBlocks = [...prevBlocks];
+      const block = newBlocks[index];
+      const possibleMoves = [
+        { dx: 0, dy: -CELL_SIZE },  // Up
+        { dx: 0, dy: CELL_SIZE },   // Down
+        { dx: -CELL_SIZE, dy: 0 },  // Left
+        { dx: CELL_SIZE, dy: 0 },   // Right
+      ];
+
+      for (const move of possibleMoves) {
+        const newTop = block.top + move.dy;
+        const newLeft = block.left + move.dx;
+
+        if (isValidMove(newBlocks, index, newTop, newLeft)) {
+          block.top = newTop;
+          block.left = newLeft;
+          return newBlocks;
+        }
+      }
+
+      return prevBlocks;  // No valid move found
+    });
+  };
+
+  const isValidMove = (blocks: BlockProps[], index: number, newTop: number, newLeft: number) => {
+    const block = blocks[index];
+    if (newTop < 0 || newLeft < 0 || 
+        newTop + block.height > BOARD_HEIGHT * CELL_SIZE || 
+        newLeft + block.width > BOARD_WIDTH * CELL_SIZE) {
+      return false;  // Out of bounds
+    }
+
+    // Check for collisions with other blocks
+    return !blocks.some((otherBlock, i) => 
+      i !== index && isOverlapping(
+        {top: newTop, left: newLeft, width: block.width, height: block.height},
+        otherBlock
+      )
+    );
+  };
+
+  const isOverlapping = (a: BlockProps, b: BlockProps) => {
+    return a.left < b.left + b.width &&
+           a.left + a.width > b.left &&
+           a.top < b.top + b.height &&
+           a.top + a.height > b.top;
   };
 
   return (
