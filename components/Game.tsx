@@ -13,18 +13,23 @@ const CELL_SIZE = 80;
 
 
 export function GameBoard() {
+
   const { t } = useTranslation();
+  const colors = {
+    caocao: 'rgb(240, 245, 229)',
+    soldier: 'rgb(146, 179, 165)',
+  }
   const initialBlocks: BlockProps[] = [
-    { name: t('blocks.caocao'), top: 0, left: CELL_SIZE, width: CELL_SIZE * 2, height: CELL_SIZE * 2, color: 'lightcoral', borderColor: 'red' },
+    { name: t('blocks.caocao'), top: 0, left: CELL_SIZE, width: CELL_SIZE * 2, height: CELL_SIZE * 2, color: colors.caocao, borderColor: 'red' },
     { name: t('blocks.zhangfei'), top: 0, left: 0, width: CELL_SIZE, height: CELL_SIZE * 2, color: 'lightblue', borderColor: 'blue' },
     { name: t('blocks.zhaoyun'), top: 0, left: CELL_SIZE * 3, width: CELL_SIZE, height: CELL_SIZE * 2, color: 'lightblue', borderColor: 'blue' },
     { name: t('blocks.huangzhong'), top: CELL_SIZE * 2, left: 0, width: CELL_SIZE, height: CELL_SIZE * 2, color: 'lightblue', borderColor: 'blue' },
     { name: t('blocks.machao'), top: CELL_SIZE * 2, left: CELL_SIZE * 3, width: CELL_SIZE, height: CELL_SIZE * 2, color: 'lightblue', borderColor: 'blue' },
     { name: t('blocks.guanyu'), top: CELL_SIZE * 2, left: CELL_SIZE, width: CELL_SIZE * 2, height: CELL_SIZE, color: 'lightgreen', borderColor: 'green' },
-    { name: `${t('blocks.soldier')} 1`, top: CELL_SIZE * 3, left: CELL_SIZE, width: CELL_SIZE, height: CELL_SIZE, color: 'lightyellow', borderColor: 'yellow' },
-    { name: `${t('blocks.soldier')} 2`, top: CELL_SIZE * 3, left: CELL_SIZE * 2, width: CELL_SIZE, height: CELL_SIZE, color: 'lightyellow', borderColor: 'yellow' },
-    { name: `${t('blocks.soldier')} 3`, top: CELL_SIZE * 4, left: CELL_SIZE, width: CELL_SIZE, height: CELL_SIZE, color: 'lightyellow', borderColor: 'yellow' },
-    { name: `${t('blocks.soldier')} 4`, top: CELL_SIZE * 4, left: CELL_SIZE * 2, width: CELL_SIZE, height: CELL_SIZE, color: 'lightyellow', borderColor: 'yellow' },
+    { name: `${t('blocks.soldier')} 1`, top: CELL_SIZE * 3, left: CELL_SIZE, width: CELL_SIZE, height: CELL_SIZE, color: colors.soldier, borderColor: 'yellow' },
+    { name: `${t('blocks.soldier')} 2`, top: CELL_SIZE * 3, left: CELL_SIZE * 2, width: CELL_SIZE, height: CELL_SIZE, color: colors.soldier, borderColor: 'yellow' },
+    { name: `${t('blocks.soldier')} 3`, top: CELL_SIZE * 4, left: CELL_SIZE, width: CELL_SIZE, height: CELL_SIZE, color: colors.soldier, borderColor: 'yellow' },
+    { name: `${t('blocks.soldier')} 4`, top: CELL_SIZE * 4, left: CELL_SIZE * 2, width: CELL_SIZE, height: CELL_SIZE, color: colors.soldier, borderColor: 'yellow' },
   ];
   const [blocks, setBlocks] = React.useState(initialBlocks);
 
