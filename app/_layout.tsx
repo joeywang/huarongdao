@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import MainScreen from '@/app/(tabs)/main';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -35,3 +36,10 @@ export default function RootLayout() {
     </ThemeProvider>
   );
 }
+<Stack.Screen
+  name="huarongdao"
+  options={{
+    title: 'Huarongdao',
+    tabBarIcon: ({ color }) => <TabBarIcon name="game-controller" color={color} />,
+  }}
+/>
