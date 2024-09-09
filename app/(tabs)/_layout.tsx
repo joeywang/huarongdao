@@ -25,19 +25,12 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="settings"
         options={{
           title: 'Settings',
-          // You can add an icon here if needed
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'setting' : 'setting-outline'} color={color} />
+          ),
         }}
       />
     </Tabs>

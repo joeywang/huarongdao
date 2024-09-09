@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Switch, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 
-const SettingsScreen = () => {
+export default function SettingsScreen() {
   const { t, i18n } = useTranslation(); 
 
   const toggleLanguage = () => {
