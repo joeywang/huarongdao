@@ -1,0 +1,19 @@
+{
+  "en": {
+    "title": "Game",
+    "start": "Start",
+    "stop": "Stop",
+    "reset": "Reset",
+    "settings": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "sound": "Sound",
+    "Cao cao": "Cao Cao",
+    "Zhang Fei": "Zhang Fei",
+    "Zhao Yun": "Zhao Yun",
+    "Huang Zhong": "Huang Zhong",
+    "Ma Chao": "Ma Chao",
+    "Guan Yu": "Guan Yu",
+    "Soldier": "Soldier"
+  }
+}
