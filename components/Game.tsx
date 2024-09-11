@@ -4,28 +4,46 @@ import { ThemedView } from './ThemedView';
 import { ThemedText } from './ThemedText';
 import { Block, BlockProps } from './Block';
 import { useTranslation } from 'react-i18next';
-
-
+import { useColorScheme } from '../hooks/useColorScheme';
 
 const BOARD_WIDTH = 4;
 const BOARD_HEIGHT = 5;
 const CELL_SIZE = 80;
 
-
-export function GameBoard() {
-
-  const { t } = useTranslation();
-  const colors = {
+// Define themes
+const themes = {
+  light: {
     caocao: 'rgb(240, 245, 229)',
     soldier: 'rgb(146, 179, 165)',
-  }
+    zhangfei: 'lightblue',
+    zhaoyun: 'lightblue',
+    huangzhong: 'lightblue',
+    machao: 'lightblue',
+    guanyu: 'lightgreen',
+  },
+  dark: {
+    caocao: 'rgb(100, 110, 90)',
+    soldier: 'rgb(80, 100, 90)',
+    zhangfei: 'darkblue',
+    zhaoyun: 'darkblue',
+    huangzhong: 'darkblue',
+    machao: 'darkblue',
+    guanyu: 'darkgreen',
+  },
+};
+
+export function GameBoard() {
+  const { t } = useTranslation();
+  const [colorScheme, setColorScheme] = useColorScheme();
+  const colors = themes[colorScheme === 'dark' ? 'dark' : 'light'];
+
   const initialBlocks: BlockProps[] = [
     { name: t('blocks.caocao'), top: 0, left: CELL_SIZE, width: CELL_SIZE * 2, height: CELL_SIZE * 2, color: colors.caocao, borderColor: 'red' },
-    { name: t('blocks.zhangfei'), top: 0, left: 0, width: CELL_SIZE, height: CELL_SIZE * 2, color: 'lightblue', borderColor: 'blue' },
-    { name: t('blocks.zhaoyun'), top: 0, left: CELL_SIZE * 3, width: CELL_SIZE, height: CELL_SIZE * 2, color: 'lightblue', borderColor: 'blue' },
-    { name: t('blocks.huangzhong'), top: CELL_SIZE * 2, left: 0, width: CELL_SIZE, height: CELL_SIZE * 2, color: 'lightblue', borderColor: 'blue' },
-    { name: t('blocks.machao'), top: CELL_SIZE * 2, left: CELL_SIZE * 3, width: CELL_SIZE, height: CELL_SIZE * 2, color: 'lightblue', borderColor: 'blue' },
-    { name: t('blocks.guanyu'), top: CELL_SIZE * 2, left: CELL_SIZE, width: CELL_SIZE * 2, height: CELL_SIZE, color: 'lightgreen', borderColor: 'green' },
+    { name: t('blocks.zhangfei'), top: 0, left: 0, width: CELL_SIZE, height: CELL_SIZE * 2, color: colors.zhangfei, borderColor: 'blue' },
+    { name: t('blocks.zhaoyun'), top: 0, left: CELL_SIZE * 3, width: CELL_SIZE, height: CELL_SIZE * 2, color: colors.zhaoyun, borderColor: 'blue' },
+    { name: t('blocks.huangzhong'), top: CELL_SIZE * 2, left: 0, width: CELL_SIZE, height: CELL_SIZE * 2, color: colors.huangzhong, borderColor: 'blue' },
+    { name: t('blocks.machao'), top: CELL_SIZE * 2, left: CELL_SIZE * 3, width: CELL_SIZE, height: CELL_SIZE * 2, color: colors.machao, borderColor: 'blue' },
+    { name: t('blocks.guanyu'), top: CELL_SIZE * 2, left: CELL_SIZE, width: CELL_SIZE * 2, height: CELL_SIZE, color: colors.guanyu, borderColor: 'green' },
     { name: `${t('blocks.soldier')} 1`, top: CELL_SIZE * 3, left: CELL_SIZE, width: CELL_SIZE, height: CELL_SIZE, color: colors.soldier, borderColor: 'yellow' },
     { name: `${t('blocks.soldier')} 2`, top: CELL_SIZE * 3, left: CELL_SIZE * 2, width: CELL_SIZE, height: CELL_SIZE, color: colors.soldier, borderColor: 'yellow' },
     { name: `${t('blocks.soldier')} 3`, top: CELL_SIZE * 4, left: CELL_SIZE, width: CELL_SIZE, height: CELL_SIZE, color: colors.soldier, borderColor: 'yellow' },

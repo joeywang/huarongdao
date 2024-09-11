@@ -1,5 +1,5 @@
 import { useColorScheme as useDeviceColorScheme, ColorSchemeName } from 'react-native';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 
 export function useColorScheme(): [ColorSchemeName, (scheme: ColorSchemeName) => void] {
   const deviceColorScheme = useDeviceColorScheme();
@@ -9,9 +9,5 @@ export function useColorScheme(): [ColorSchemeName, (scheme: ColorSchemeName) =>
     setColorScheme(deviceColorScheme);
   }, [deviceColorScheme]);
 
-  const switchColorScheme = useCallback((scheme: ColorSchemeName) => {
-    setColorScheme(scheme);
-  }, []);
-
-  return [colorScheme, switchColorScheme];
+  return [colorScheme, setColorScheme];
 }
