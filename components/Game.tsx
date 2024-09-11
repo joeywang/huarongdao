@@ -158,8 +158,8 @@ export function GameBoard() {
 
 const styles = StyleSheet.create({
   board: {
-    width: 4 * CELL_SIZE,
-    height: 5 * CELL_SIZE,
+    width: 4 * CELL_SIZE + 4,
+    height: 5 * CELL_SIZE + 4,
     borderWidth: 2,
     borderColor: 'gray',
     justifyContent: 'center',
