@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { ThemedText } from './ThemedText';
 
 export interface BlockProps {
@@ -19,12 +19,12 @@ export function Block({ name, top, left, width, height, color, borderColor, onPr
     <TouchableOpacity
       style={[
         styles.block,
-        { top, left, width, height, backgroundColor: color, borderColor },
-        isSelected && styles.selectedBlock
+        { top, left, width, height, backgroundColor: color, borderColor }
       ]}
       onPress={onPress}
     >
       <ThemedText style={styles.blockText}>{name}</ThemedText>
+      {isSelected && <View style={styles.highlight} />}
     </TouchableOpacity>
   );
 }
@@ -43,8 +43,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
-  selectedBlock: {
-    borderWidth: 3,
-    borderColor: 'yellow',
+  highlight: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(255, 255, 255, 0.5)', // White overlay
+    borderRadius: 5,
   },
 });
