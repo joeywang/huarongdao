@@ -60,11 +60,8 @@ export function GameBoard() {
     if (selectedBlockIndex === null) return;
 
     const selectedBlock = blocks[selectedBlockIndex];
-    const dx = x - selectedBlock.left;
-    const dy = y - selectedBlock.top;
-    console.log('--------------------------------');
-    console.log(x, y, selectedBlock.left, selectedBlock.top);
-    console.log(dx, dy);
+    const dx = x < selectedBlock.left ? x - selectedBlock.left : x + CELL_SIZE - selectedBlock.left - selectedBlock.width;
+    const dy = y > selectedBlock.top ? y + CELL_SIZE - selectedBlock.top - selectedBlock.height : y - selectedBlock.top;
 
     if ((Math.abs(dx) + Math.abs(dy)) % CELL_SIZE === 0 && 
         isValidMove(blocks, selectedBlockIndex, selectedBlock.top + dy, selectedBlock.left + dx)) {
