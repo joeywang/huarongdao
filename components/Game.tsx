@@ -52,18 +52,42 @@ export function GameBoard() {
   const [blocks, setBlocks] = React.useState(initialBlocks);
   const [selectedBlockIndex, setSelectedBlockIndex] = React.useState<number | null>(null);
 
+  const getValidMoves = (blockIndex: number) => {
+    const block = blocks[blockIndex];
+    const possibleMoves = [
+      { dx: 0, dy: -CELL_SIZE },
+      { dx: 0, dy: CELL_SIZE },
+      { dx: -CELL_SIZE, dy: 0 },
+      { dx: CELL_SIZE, dy: 0 },
+    ];
+
+    return possibleMoves.filter(move => 
+      isValidMove(blocks, blockIndex, block.top + move.dy, block.left + move.dx)
+    );
+  };
+
   const handleBlockPress = (index: number) => {
-    setSelectedBlockIndex(index);
+    const validMoves = getValidMoves(index);
+
+    if (validMoves.length === 0) {
+      // No valid moves, do nothing or show a message
+    } else if (validMoves.length === 1) {
+      // Only one valid move, execute it immediately
+      moveBlock(index, validMoves[0].dx, validMoves[0].dy);
+    } else {
+      // Multiple valid moves, enter selection mode
+      setSelectedBlockIndex(index);
+    }
   };
 
   const handleBoardPress = (x: number, y: number) => {
     if (selectedBlockIndex === null) return;
 
     const selectedBlock = blocks[selectedBlockIndex];
-    const dx = x < selectedBlock.left ? x - selectedBlock.left : x + CELL_SIZE - selectedBlock.left - selectedBlock.width;
-    const dy = y > selectedBlock.top ? y + CELL_SIZE - selectedBlock.top - selectedBlock.height : y - selectedBlock.top;
+    const dx = x - selectedBlock.left;
+    const dy = y - selectedBlock.top;
 
-    if ((Math.abs(dx) + Math.abs(dy)) % CELL_SIZE === 0 && 
+    if (Math.abs(dx) + Math.abs(dy) === CELL_SIZE && 
         isValidMove(blocks, selectedBlockIndex, selectedBlock.top + dy, selectedBlock.left + dx)) {
       moveBlock(selectedBlockIndex, dx, dy);
       setSelectedBlockIndex(null);
