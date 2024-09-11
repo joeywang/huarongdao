@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { ThemedView } from './ThemedView';
 import { ThemedText } from './ThemedText';
 import { Block, BlockProps } from './Block';
@@ -50,36 +50,38 @@ export function GameBoard() {
     { name: `${t('blocks.soldier')} 4`, top: CELL_SIZE * 4, left: CELL_SIZE * 2, width: CELL_SIZE, height: CELL_SIZE, color: colors.soldier, borderColor: 'yellow' },
   ];
   const [blocks, setBlocks] = React.useState(initialBlocks);
+  const [selectedBlockIndex, setSelectedBlockIndex] = React.useState<number | null>(null);
 
   const handleBlockPress = (index: number) => {
+    setSelectedBlockIndex(index);
+  };
+
+  const handleBoardPress = (x: number, y: number) => {
+    if (selectedBlockIndex === null) return;
+
+    const selectedBlock = blocks[selectedBlockIndex];
+    const dx = x - selectedBlock.left;
+    const dy = y - selectedBlock.top;
+    console.log('--------------------------------');
+    console.log(x, y, selectedBlock.left, selectedBlock.top);
+    console.log(dx, dy);
+
+    if ((Math.abs(dx) + Math.abs(dy)) % CELL_SIZE === 0 && 
+        isValidMove(blocks, selectedBlockIndex, selectedBlock.top + dy, selectedBlock.left + dx)) {
+      moveBlock(selectedBlockIndex, dx, dy);
+      setSelectedBlockIndex(null);
+    }
+  };
+
+  const moveBlock = (index: number, dx: number, dy: number) => {
     setBlocks(prevBlocks => {
       const newBlocks = [...prevBlocks];
-      const block = newBlocks[index];
-      const possibleMoves = [
-        { dx: 0, dy: -CELL_SIZE },  // Up
-        { dx: 0, dy: CELL_SIZE },   // Down
-        { dx: -CELL_SIZE, dy: 0 },  // Left
-        { dx: CELL_SIZE, dy: 0 },   // Right
-      ];
-
-      // Shuffle the possibleMoves array
-      for (let i = possibleMoves.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [possibleMoves[i], possibleMoves[j]] = [possibleMoves[j], possibleMoves[i]];
-      }
-
-      for (const move of possibleMoves) {
-        const newTop = block.top + move.dy;
-        const newLeft = block.left + move.dx;
-
-        if (isValidMove(newBlocks, index, newTop, newLeft)) {
-          block.top = newTop;
-          block.left = newLeft;
-          return newBlocks;
-        }
-      }
-
-      return prevBlocks;  // No valid move found
+      newBlocks[index] = {
+        ...newBlocks[index],
+        top: newBlocks[index].top + dy,
+        left: newBlocks[index].left + dx,
+      };
+      return newBlocks;
     });
   };
 
@@ -109,11 +111,24 @@ export function GameBoard() {
 
   return (
     <ThemedView style={styles.board}>
+      {Array.from({ length: BOARD_HEIGHT }, (_, row) => (
+        Array.from({ length: BOARD_WIDTH }, (_, col) => (
+          <TouchableOpacity
+            key={`${row}-${col}`}
+            style={[
+              styles.cell,
+              { top: row * CELL_SIZE, left: col * CELL_SIZE }
+            ]}
+            onPress={() => handleBoardPress(col * CELL_SIZE, row * CELL_SIZE)}
+          />
+        ))
+      ))}
       {blocks.map((block, index) => (
         <Block
-            key={block.name}
-            {...block}
-            onPress={() => handleBlockPress(index)}
+          key={block.name}
+          {...block}
+          onPress={() => handleBlockPress(index)}
+          isSelected={index === selectedBlockIndex}
         />
       ))}
     </ThemedView>
@@ -128,5 +143,12 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  cell: {
+    position: 'absolute',
+    width: CELL_SIZE,
+    height: CELL_SIZE,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.1)',
   },
 });

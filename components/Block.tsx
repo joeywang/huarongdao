@@ -11,21 +11,16 @@ export interface BlockProps {
   color: string;
   borderColor: string;
   onPress?: () => void;
+  isSelected?: boolean;
 }
 
-export function Block({ name, top, left, width, height, color, borderColor, onPress }: BlockProps) {
+export function Block({ name, top, left, width, height, color, borderColor, onPress, isSelected }: BlockProps) {
   return (
     <TouchableOpacity
       style={[
         styles.block,
-        {
-          top,
-          left,
-          width,
-          height,
-          backgroundColor: color,
-          borderColor,
-        },
+        { top, left, width, height, backgroundColor: color, borderColor },
+        isSelected && styles.selectedBlock
       ]}
       onPress={onPress}
     >
@@ -47,5 +42,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  selectedBlock: {
+    borderWidth: 3,
+    borderColor: 'yellow',
   },
 });
